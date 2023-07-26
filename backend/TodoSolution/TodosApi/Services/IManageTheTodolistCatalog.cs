@@ -1,8 +1,8 @@
-﻿namespace TodosApi.Services
+﻿namespace TodosApi;
+
+public interface IManageTheTodolistCatalog
 {
-    public interface IManageTheTodolistCatalog
-    {
-        Task<TodoListItemResponseModel> AddTodoItemAsync(TodoListCreateModel request);
-        Task<CollectionResponse<TodoListItemResponseModel>> GetFullListAsync();
-    }
+    Task<TodoListItemResponseModel> AddTodoItemAsync(TodoListCreateModel request);
+    Task<TodoListItemResponseModel?> ChangeStatusAsync(TodoListItemRequestModel request);
+    Task<CollectionResponse<TodoListItemResponseModel>> GetFullListAsync();
 }

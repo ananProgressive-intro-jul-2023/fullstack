@@ -1,5 +1,6 @@
-﻿using Marten;
-using TodosApi.Services;
+﻿
+
+using Marten;
 
 namespace TodosApi.Controllers;
 
@@ -11,7 +12,24 @@ public class TodoListController : ControllerBase
 
     public TodoListController(IManageTheTodolistCatalog todoListCatalog)
     {
-        _todoListCatalog = todoListCatalog;
+        this._todoListCatalog = todoListCatalog;
+    }
+
+    // POST /todo-list-status-changes
+    [HttpPost("/todos-list-status-change")]
+    public async Task<ActionResult> ChangeTheStatusOf([FromBody] TodoListItemRequestModel request)
+    {
+        TodoListItemResponseModel? response = await _todoListCatalog.ChangeStatusAsync(request);
+
+        if (response == null)
+        {
+            return BadRequest("No item with that Id to change the status of");
+        }
+        else
+        {
+            return Ok(request);
+        }
+
     }
 
     [HttpPost("/todo-list")]
@@ -21,6 +39,7 @@ public class TodoListController : ControllerBase
         return Ok(response);
     }
 
+   
 
     // GET /todo-list
     [HttpGet("/todo-list")]

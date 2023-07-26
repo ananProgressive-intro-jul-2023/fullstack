@@ -11,7 +11,7 @@ builder.Services.AddControllers() // Microsoft stuff for creating instances of c
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-    });
+    }); 
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -31,10 +31,20 @@ builder.Services.AddMarten(options =>
 // This says "Hey MVC, if you create anything that needs an IManageTheTodoListCatalog, use the MartinTodoListCatalog
 builder.Services.AddTransient<IManageTheTodolistCatalog, MartenTodolistCatalog>();
 // everything above this line is configuring "Services" in our application.
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(pol =>
+    {
+        pol.AllowAnyOrigin();
+        pol.AllowAnyMethod();
+        pol.AllowAnyHeader();
+    });
+});
 var app = builder.Build();
 // this is configuring the "middleware" - this is code that will see the incoming HTTP request
 // and make a response.
-
+app.UseCors();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

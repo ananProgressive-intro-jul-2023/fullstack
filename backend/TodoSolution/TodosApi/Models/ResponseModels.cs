@@ -1,6 +1,4 @@
-﻿
-
-namespace TodosApi.Models;
+﻿namespace TodosApi.Models;
 
 
 public record CollectionResponse<T>(IReadOnlyList<T> List);
